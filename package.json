@@ -2,8 +2,9 @@
   "name": "picolisp-action",
   "version": "1.0.0",
   "description": "Run 32-bit or 64-bit PicoLisp code",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "build":"coffee -c -b --no-header index.coffee && ncc build index.js && rm index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,6 +22,7 @@
     "@actions/exec": "^1.0.1"
   },
   "devDependencies": {
+    "@zeit/ncc": "^0.20.5",
     "coffeescript": "^2.4.1"
   }
 }

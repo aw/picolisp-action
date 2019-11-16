@@ -34,7 +34,7 @@ module.exports =
 /******/ 	// the startup function
 /******/ 	function startup() {
 /******/ 		// Load entry module and return exports
-/******/ 		return __webpack_require__(677);
+/******/ 		return __webpack_require__(104);
 /******/ 	};
 /******/
 /******/ 	// run startup
@@ -43,138 +43,7 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
-/***/ 87:
-/***/ (function(module) {
-
-module.exports = require("os");
-
-/***/ }),
-
-/***/ 105:
-/***/ (function(__unusedmodule, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const tr = __webpack_require__(387);
-/**
- * Exec a command.
- * Output will be streamed to the live console.
- * Returns promise with return code
- *
- * @param     commandLine        command to execute (can include additional args). Must be correctly escaped.
- * @param     args               optional arguments for tool. Escaping is handled by the lib.
- * @param     options            optional exec options.  See ExecOptions
- * @returns   Promise<number>    exit code
- */
-function exec(commandLine, args, options) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const commandArgs = tr.argStringToArray(commandLine);
-        if (commandArgs.length === 0) {
-            throw new Error(`Parameter 'commandLine' cannot be null or empty.`);
-        }
-        // Path to tool to execute should be first arg
-        const toolPath = commandArgs[0];
-        args = commandArgs.slice(1).concat(args || []);
-        const runner = new tr.ToolRunner(toolPath, args, options);
-        return runner.exec();
-    });
-}
-exports.exec = exec;
-//# sourceMappingURL=exec.js.map
-
-/***/ }),
-
-/***/ 129:
-/***/ (function(module) {
-
-module.exports = require("child_process");
-
-/***/ }),
-
-/***/ 325:
-/***/ (function(__unusedmodule, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const os = __webpack_require__(87);
-/**
- * Commands
- *
- * Command Format:
- *   ##[name key=value;key=value]message
- *
- * Examples:
- *   ##[warning]This is the user warning message
- *   ##[set-secret name=mypassword]definitelyNotAPassword!
- */
-function issueCommand(command, properties, message) {
-    const cmd = new Command(command, properties, message);
-    process.stdout.write(cmd.toString() + os.EOL);
-}
-exports.issueCommand = issueCommand;
-function issue(name, message = '') {
-    issueCommand(name, {}, message);
-}
-exports.issue = issue;
-const CMD_STRING = '::';
-class Command {
-    constructor(command, properties, message) {
-        if (!command) {
-            command = 'missing.command';
-        }
-        this.command = command;
-        this.properties = properties;
-        this.message = message;
-    }
-    toString() {
-        let cmdStr = CMD_STRING + this.command;
-        if (this.properties && Object.keys(this.properties).length > 0) {
-            cmdStr += ' ';
-            for (const key in this.properties) {
-                if (this.properties.hasOwnProperty(key)) {
-                    const val = this.properties[key];
-                    if (val) {
-                        // safely append the val - avoid blowing up when attempting to
-                        // call .replace() if message is not a string for some reason
-                        cmdStr += `${key}=${escape(`${val || ''}`)},`;
-                    }
-                }
-            }
-        }
-        cmdStr += CMD_STRING;
-        // safely append the message - avoid blowing up when attempting to
-        // call .replace() if message is not a string for some reason
-        const message = `${this.message || ''}`;
-        cmdStr += escapeData(message);
-        return cmdStr;
-    }
-}
-function escapeData(s) {
-    return s.replace(/\r/g, '%0D').replace(/\n/g, '%0A');
-}
-function escape(s) {
-    return s
-        .replace(/\r/g, '%0D')
-        .replace(/\n/g, '%0A')
-        .replace(/]/g, '%5D')
-        .replace(/;/g, '%3B');
-}
-//# sourceMappingURL=command.js.map
-
-/***/ }),
-
-/***/ 387:
+/***/ 9:
 /***/ (function(__unusedmodule, exports, __webpack_require__) {
 
 "use strict";
@@ -755,7 +624,167 @@ class ExecState extends events.EventEmitter {
 
 /***/ }),
 
-/***/ 451:
+/***/ 87:
+/***/ (function(module) {
+
+module.exports = require("os");
+
+/***/ }),
+
+/***/ 104:
+/***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
+
+  // Main required modules
+var allowedArch, allowedVersions, core, defaultArch, defaultVersion, exec, init, pilPath,
+  indexOf = [].indexOf;
+
+core = __webpack_require__(470);
+
+exec = __webpack_require__(986);
+
+pilPath = "https://software-lab.de";
+
+defaultVersion = '19.6';
+
+defaultArch = 'src64';
+
+allowedVersions = [defaultVersion, '18.12', '18.6', '17.12', 'latest'];
+
+allowedArch = [defaultArch, 'src'];
+
+init = async function() {
+  var arch, error, pilArchitecture, pilTarball, pilVersion, ver;
+  try {
+    // Set temporary variables variables (input)
+    ver = (await core.getInput('version', {
+      required: false
+    }));
+    arch = (await core.getInput('architecture', {
+      required: false
+    }));
+    // Set internal variables
+    pilVersion = indexOf.call(allowedVersions, ver) >= 0 ? ver : defaultVersion;
+    pilArchitecture = indexOf.call(allowedArch, arch) >= 0 ? arch : defaultArch;
+    pilTarball = pilVersion === 'latest' ? 'picoLisp.tgz' : `picoLisp-${pilVersion}.tgz`;
+    console.log(`Pil ver: ${pilVersion}`);
+    console.log(`Pil arch: ${pilArchitecture}`);
+    // Update Ubuntu and install dependencies
+    await exec.exec('sudo', ['apt-get', 'update']);
+    await exec.exec('sudo', ['apt-get', 'install', 'libc6-dev-i386', 'libc6-i386', 'linux-libc-dev', 'gcc-multilib']);
+    // Download and extract PicoLisp
+    await exec.exec('curl', ['-o', 'picolisp.tgz', `${pilPath}/${pilTarball}`], {
+      cwd: '/tmp'
+    });
+    await exec.exec('tar', ['-xf', 'picolisp.tgz'], {
+      cwd: '/tmp'
+    });
+    // Build PicoLisp 32-bit
+    await exec.exec('make', null, {
+      cwd: '/tmp/picoLisp/src'
+    });
+    if (pilArchitecture === 'src64') {
+      // Build PicoLisp 64-bit
+      await exec.exec('make', null, {
+        cwd: '/tmp/picoLisp/src64'
+      });
+    }
+    // Install PicoLisp globally
+    await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp', '/usr/lib/picolisp']);
+    await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/picolisp', '/usr/bin']);
+    await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/pil', '/usr/bin']);
+    await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp', '/usr/share/picolisp']);
+  } catch (error1) {
+    error = error1;
+    return core.setFailed(error.message);
+  }
+};
+
+init();
+
+
+/***/ }),
+
+/***/ 129:
+/***/ (function(module) {
+
+module.exports = require("child_process");
+
+/***/ }),
+
+/***/ 431:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const os = __webpack_require__(87);
+/**
+ * Commands
+ *
+ * Command Format:
+ *   ##[name key=value;key=value]message
+ *
+ * Examples:
+ *   ##[warning]This is the user warning message
+ *   ##[set-secret name=mypassword]definitelyNotAPassword!
+ */
+function issueCommand(command, properties, message) {
+    const cmd = new Command(command, properties, message);
+    process.stdout.write(cmd.toString() + os.EOL);
+}
+exports.issueCommand = issueCommand;
+function issue(name, message = '') {
+    issueCommand(name, {}, message);
+}
+exports.issue = issue;
+const CMD_STRING = '::';
+class Command {
+    constructor(command, properties, message) {
+        if (!command) {
+            command = 'missing.command';
+        }
+        this.command = command;
+        this.properties = properties;
+        this.message = message;
+    }
+    toString() {
+        let cmdStr = CMD_STRING + this.command;
+        if (this.properties && Object.keys(this.properties).length > 0) {
+            cmdStr += ' ';
+            for (const key in this.properties) {
+                if (this.properties.hasOwnProperty(key)) {
+                    const val = this.properties[key];
+                    if (val) {
+                        // safely append the val - avoid blowing up when attempting to
+                        // call .replace() if message is not a string for some reason
+                        cmdStr += `${key}=${escape(`${val || ''}`)},`;
+                    }
+                }
+            }
+        }
+        cmdStr += CMD_STRING;
+        // safely append the message - avoid blowing up when attempting to
+        // call .replace() if message is not a string for some reason
+        const message = `${this.message || ''}`;
+        cmdStr += escapeData(message);
+        return cmdStr;
+    }
+}
+function escapeData(s) {
+    return s.replace(/\r/g, '%0D').replace(/\n/g, '%0A');
+}
+function escape(s) {
+    return s
+        .replace(/\r/g, '%0D')
+        .replace(/\n/g, '%0A')
+        .replace(/]/g, '%5D')
+        .replace(/;/g, '%3B');
+}
+//# sourceMappingURL=command.js.map
+
+/***/ }),
+
+/***/ 470:
 /***/ (function(__unusedmodule, exports, __webpack_require__) {
 
 "use strict";
@@ -770,7 +799,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const command_1 = __webpack_require__(325);
+const command_1 = __webpack_require__(431);
 const os = __webpack_require__(87);
 const path = __webpack_require__(622);
 /**
@@ -971,76 +1000,47 @@ module.exports = require("path");
 
 /***/ }),
 
-/***/ 677:
-/***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
+/***/ 986:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
 
-  // Main required modules
-var allowedArch, allowedVersions, core, defaultArch, defaultVersion, exec, init, pilPath,
-  indexOf = [].indexOf;
+"use strict";
 
-core = __webpack_require__(451);
-
-exec = __webpack_require__(105);
-
-pilPath = "https://software-lab.de";
-
-defaultVersion = '19.6';
-
-defaultArch = 'src64';
-
-allowedVersions = [defaultVersion, '18.12', '18.6', '17.12', 'latest'];
-
-allowedArch = [defaultArch, 'src'];
-
-init = async function() {
-  var arch, error, pilArchitecture, pilTarball, pilVersion, ver;
-  try {
-    // Set temporary variables variables (input)
-    ver = (await core.getInput('version', {
-      required: false
-    }));
-    arch = (await core.getInput('architecture', {
-      required: false
-    }));
-    // Set internal variables
-    pilVersion = indexOf.call(allowedVersions, ver) >= 0 ? ver : defaultVersion;
-    pilArchitecture = indexOf.call(allowedArch, arch) >= 0 ? arch : defaultArch;
-    pilTarball = pilVersion === 'latest' ? 'picoLisp.tgz' : `picoLisp-${pilVersion}.tgz`;
-    console.log(`Pil ver: ${pilVersion}`);
-    console.log(`Pil arch: ${pilArchitecture}`);
-    // Update Ubuntu and install dependencies
-    await exec.exec('sudo', ['apt-get', 'update']);
-    await exec.exec('sudo', ['apt-get', 'install', 'libc6-dev-i386', 'libc6-i386', 'linux-libc-dev', 'gcc-multilib']);
-    // Download and extract PicoLisp
-    await exec.exec('curl', ['-o', 'picolisp.tgz', `${pilPath}/${pilTarball}`], {
-      cwd: '/tmp'
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
-    await exec.exec('tar', ['-xf', 'picolisp.tgz'], {
-      cwd: '/tmp'
-    });
-    // Build PicoLisp 32-bit
-    await exec.exec('make', null, {
-      cwd: '/tmp/picoLisp/src'
-    });
-    if (pilArchitecture === 'src64') {
-      // Build PicoLisp 64-bit
-      await exec.exec('make', null, {
-        cwd: '/tmp/picoLisp/src64'
-      });
-    }
-    // Install PicoLisp globally
-    await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp', '/usr/lib/picolisp']);
-    await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/picolisp', '/usr/bin']);
-    await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/pil', '/usr/bin']);
-    await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp', '/usr/share/picolisp']);
-  } catch (error1) {
-    error = error1;
-    return core.setFailed(error.message);
-  }
 };
-
-init();
-
+Object.defineProperty(exports, "__esModule", { value: true });
+const tr = __webpack_require__(9);
+/**
+ * Exec a command.
+ * Output will be streamed to the live console.
+ * Returns promise with return code
+ *
+ * @param     commandLine        command to execute (can include additional args). Must be correctly escaped.
+ * @param     args               optional arguments for tool. Escaping is handled by the lib.
+ * @param     options            optional exec options.  See ExecOptions
+ * @returns   Promise<number>    exit code
+ */
+function exec(commandLine, args, options) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const commandArgs = tr.argStringToArray(commandLine);
+        if (commandArgs.length === 0) {
+            throw new Error(`Parameter 'commandLine' cannot be null or empty.`);
+        }
+        // Path to tool to execute should be first arg
+        const toolPath = commandArgs[0];
+        args = commandArgs.slice(1).concat(args || []);
+        const runner = new tr.ToolRunner(toolPath, args, options);
+        return runner.exec();
+    });
+}
+exports.exec = exec;
+//# sourceMappingURL=exec.js.map
 
 /***/ })
 
