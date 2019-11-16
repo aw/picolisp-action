@@ -1,0 +1,18 @@
+name: 'PicoLisp Action'
+description: 'Run 32-bit or 64-bit PicoLisp code'
+author: 'AW <license@unscramble.jp>'
+branding:
+  icon: 'code'
+  color: 'purple'
+inputs:
+  version:
+    description: 'The version of PicoLisp'
+    required: false
+    default: '19.6' # accepts '19.6', '18.12', '18.6', '17.12', 'latest'
+  architecture:
+    description: 'The architecture of PicoLisp (32 or 64-bit)'
+    required: false
+    default: 'src64' # accepts 'src' or 'src64'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

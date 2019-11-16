@@ -1,0 +1,26 @@
+{
+  "name": "picolisp-action",
+  "version": "1.0.0",
+  "description": "Run 32-bit or 64-bit PicoLisp code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aw/picolisp-action.git"
+  },
+  "keywords": [
+    "picolisp",
+    "actions"
+  ],
+  "author": "AW",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.2.0",
+    "@actions/exec": "^1.0.1"
+  },
+  "devDependencies": {
+    "coffeescript": "^2.4.1"
+  }
+}
