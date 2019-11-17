@@ -635,14 +635,16 @@ module.exports = require("os");
 /***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
 
   // Main required modules
-var allowedArch, allowedVersions, core, defaultArch, defaultVersion, exec, init, pilPath,
+var allowedArch, allowedVersions, core, defaultArch, defaultVersion, exec, init, pilPath, releaseVersion,
   indexOf = [].indexOf;
 
 core = __webpack_require__(470);
 
 exec = __webpack_require__(986);
 
-pilPath = "https://software-lab.de";
+releaseVersion = 'v1'; // stable release version (git tag)
+
+pilPath = 'https://software-lab.de';
 
 defaultVersion = '19.6';
 
@@ -655,7 +657,7 @@ allowedArch = [defaultArch, 'src'];
 init = async function() {
   var arch, error, pilArchitecture, pilTarball, pilVersion, ver;
   try {
-    // Set temporary variables variables (input)
+    // Set temporary variables (input)
     ver = (await core.getInput('version', {
       required: false
     }));
@@ -666,8 +668,7 @@ init = async function() {
     pilVersion = indexOf.call(allowedVersions, ver) >= 0 ? ver : defaultVersion;
     pilArchitecture = indexOf.call(allowedArch, arch) >= 0 ? arch : defaultArch;
     pilTarball = pilVersion === 'latest' ? 'picoLisp.tgz' : `picoLisp-${pilVersion}.tgz`;
-    console.log(`Pil ver: ${pilVersion}`);
-    console.log(`Pil arch: ${pilArchitecture}`);
+    console.log(`Building PicoLisp ver: ${pilVersion} for arch: ${pilArchitecture}`);
     // Update Ubuntu and install dependencies
     await exec.exec('sudo', ['apt-get', 'update']);
     await exec.exec('sudo', ['apt-get', 'install', 'libc6-dev-i386', 'libc6-i386', 'linux-libc-dev', 'gcc-multilib']);

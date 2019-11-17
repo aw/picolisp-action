@@ -4,7 +4,7 @@
   "description": "Run 32-bit or 64-bit PicoLisp code",
   "main": "dist/index.js",
   "scripts": {
-    "build":"coffee -c -b --no-header index.coffee && ncc build index.js && rm index.js",
+    "build": "coffee -c -b --no-header index.coffee && ncc build index.js && rm index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

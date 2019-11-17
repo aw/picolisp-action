@@ -21,9 +21,8 @@ It can be used to run PicoLisp code such as [units tests](https://github.com/aw/
     version: 18.12
     architecture: src64
 
-- name: Run some tests
-  run: |
-    pil ./test.l
+- name: Print Hello World with the full PicoLisp version number
+  run: pil -'prin "Hello World: "' -version -bye
 ```
 
 ## Example workflow
@@ -32,19 +31,23 @@ See the [picolisp-json workflow](https://github.com/aw/picolisp-json/blob/master
 
 ## Code
 
-This action is written in _CoffeeScript_, see [index.coffee](index.coffee).
+This action is written in CoffeeScript, see [index.coffee](index.coffee)
 
 ## Notes
 
-* Unknown values will be replaced with the default value (ex: version: 1.2.3, will become version 19.6)
-* The _PicoLisp_ environment is in extracted to `/tmp/picoLisp`
-* 32-bit _PicoLisp_ is always compiled
-* 64-bit _PicoLisp_ is bootstrapped from the 32-bit _PicoLisp_
-* 64-bit _PicoLisp_ will not be compiled if the `architecture` value is `src`
+* Unknown values will be replaced with the default value (ex: version: 1.2.3, will become version: 19.6)
+* The PicoLisp environment is extracted to `/tmp/picoLisp`
+* 32-bit PicoLisp is always compiled
+* 64-bit PicoLisp is bootstrapped from the 32-bit PicoLisp
+* 64-bit PicoLisp will not be compiled if the `architecture` value is `src`
 
 ## Build
 
-To build this action, install `NodeJS v12` and the dev dependencies with `npm install`. Then type `npm run build` to generate the `dist/index.js`.
+To build this action:
+
+* Install `NodeJS v12`
+* Install the dev dependencies with `npm install`
+* Generate the `dist/index.js` with `npm run build`
 
 # License
 

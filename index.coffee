@@ -2,7 +2,8 @@
 core      = require '@actions/core'
 exec      = require '@actions/exec'
 
-pilPath         = "https://software-lab.de"
+releaseVersion  = 'v1' # stable release version (git tag)
+pilPath         = 'https://software-lab.de'
 defaultVersion  = '19.6'
 defaultArch     = 'src64'
 allowedVersions = [defaultVersion, '18.12', '18.6', '17.12', 'latest']
@@ -10,7 +11,7 @@ allowedArch     = [defaultArch, 'src']
 
 init = () ->
   try
-    # Set temporary variables variables (input)
+    # Set temporary variables (input)
     ver   = await core.getInput('version',      { required: false })
     arch  = await core.getInput('architecture', { required: false })
 
@@ -19,8 +20,7 @@ init = () ->
     pilArchitecture = if arch in allowedArch     then arch            else defaultArch
     pilTarball      = if pilVersion is 'latest'  then 'picoLisp.tgz'  else "picoLisp-#{pilVersion}.tgz"
 
-    console.log "Pil ver: #{pilVersion}"
-    console.log "Pil arch: #{pilArchitecture}"
+    console.log "Building PicoLisp ver: #{pilVersion} for arch: #{pilArchitecture}"
 
     # Update Ubuntu and install dependencies
     await exec.exec('sudo', ['apt-get', 'update'])
