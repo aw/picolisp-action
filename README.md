@@ -3,6 +3,8 @@
 This action downloads, compiles, and globally installs PicoLisp.
 It can be used to run PicoLisp code such as [units tests](https://github.com/aw/picolisp-unit).
 
+![Example PicoLisp tests](https://user-images.githubusercontent.com/153401/70022112-e4695580-158a-11ea-886d-0db01dbe7a66.png)
+
 ## Inputs
 
 ### `version`
