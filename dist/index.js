@@ -694,7 +694,7 @@ init = async function() {
     await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/pil', '/usr/bin']);
     await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp', '/usr/share/picolisp']);
     // Display the compiled version
-    await exec.exec('pil', ["-prin '\"Built PicoLisp \" '${pilArchitecture} '\" ver: \"", '-version', '-bye']);
+    await exec.exec('pil', ["\"-prin '\\\"Built PicoLisp \\\" '${pilArchitecture} '\\\" ver: \\\"\"", '-version', '-bye']);
   } catch (error1) {
     error = error1;
     return core.setFailed(error.message);
