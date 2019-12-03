@@ -41,7 +41,8 @@ init = () ->
     await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp',                   '/usr/share/picolisp'])
 
     # Display the compiled version
-    await exec.exec('pil',  ["\"-prin '\\\"Built PicoLisp \\\" '${pilArchitecture} '\\\" ver: \\\"\"", '-version', '-bye'])
+    console.log "Built PicoLisp ver:"
+    await exec.exec('pil',  ['-version', '-bye'])
 
     await return
 
