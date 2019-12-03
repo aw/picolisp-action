@@ -20,8 +20,6 @@ init = () ->
     pilArchitecture = if arch in allowedArch     then arch            else defaultArch
     pilTarball      = if pilVersion is 'latest'  then 'picoLisp.tgz'  else "picoLisp-#{pilVersion}.tgz"
 
-    console.log "Building PicoLisp ver: #{pilVersion} for arch: #{pilArchitecture}"
-
     # Update Ubuntu and install dependencies
     await exec.exec('sudo', ['apt-get', 'update'])
     await exec.exec('sudo', ['apt-get', 'install', 'libc6-dev-i386', 'libc6-i386', 'linux-libc-dev', 'gcc-multilib'])
@@ -41,6 +39,9 @@ init = () ->
     await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/picolisp',  '/usr/bin'])
     await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/pil',       '/usr/bin'])
     await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp',                   '/usr/share/picolisp'])
+
+    # Display the compiled version
+    await exec.exec('pil',  ["-'prin \"Built PicoLisp #{pilArchitecture} ver: \"'", '-version', '-bye'])
 
     await return
 
