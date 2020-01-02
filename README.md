@@ -9,7 +9,7 @@ It can be used to run PicoLisp code such as [units tests](https://github.com/aw/
 
 ### `version`
 
-**Optional** The version of PicoLisp. Default `19.6`. Accepts `19.6`, `18.12`, `18.6`, `17.12`, `latest`
+**Optional** The version of PicoLisp. Default `19.12`. Accepts `19.12`, `19.6`, `18.12`, `18.6`, `17.12`, `latest`
 
 ### `architecture`
 
@@ -18,7 +18,7 @@ It can be used to run PicoLisp code such as [units tests](https://github.com/aw/
 ## Example usage
 
 ```
-- uses: aw/picolisp-action@v1
+- uses: aw/picolisp-action@v2
   with:
     version: 18.12
     architecture: src64
@@ -37,7 +37,7 @@ This action is written in CoffeeScript, see [index.coffee](index.coffee)
 
 ## Notes
 
-* Unknown values will be replaced with the default value (ex: version: 1.2.3, will become version: 19.6)
+* Unknown values will be replaced with the default value (ex: version: 1.2.3, will become version: 19.12)
 * The PicoLisp environment is extracted to `/tmp/picoLisp`
 * 32-bit PicoLisp is always compiled
 * 64-bit PicoLisp is bootstrapped from the 32-bit PicoLisp
@@ -55,4 +55,4 @@ To build this action:
 
 [MIT License](LICENSE)
 
-Copyright (c) 2019 Alexander Williams, Unscramble <license@unscramble.jp>
+Copyright (c) 2019-2020 Alexander Williams, Unscramble <license@unscramble.jp>

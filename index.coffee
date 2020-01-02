@@ -2,11 +2,11 @@
 core      = require '@actions/core'
 exec      = require '@actions/exec'
 
-releaseVersion  = 'v1' # stable release version (git tag)
+releaseVersion  = 'v2' # stable release version (git tag)
 pilPath         = 'https://software-lab.de'
-defaultVersion  = '19.6'
+defaultVersion  = '19.12'
 defaultArch     = 'src64'
-allowedVersions = [defaultVersion, '18.12', '18.6', '17.12', 'latest']
+allowedVersions = [defaultVersion, '19.6', '18.12', '18.6', '17.12', 'latest']
 allowedArch     = [defaultArch, 'src']
 
 init = () ->
