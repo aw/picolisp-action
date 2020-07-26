@@ -25,7 +25,7 @@ init = () ->
     await exec.exec('sudo', ['apt-get', 'install', 'libc6-dev-i386', 'libc6-i386', 'linux-libc-dev', 'gcc-multilib'])
 
     # Download and extract PicoLisp
-    await exec.exec('curl', ['-o', 'picolisp.tgz', "#{pilPath}/#{pilTarball}"], { cwd: '/tmp'})
+    await exec.exec('curl', ['--http1.1', '-o', 'picolisp.tgz', "#{pilPath}/#{pilTarball}"], { cwd: '/tmp'})
     await exec.exec('tar',  ['-xf', 'picolisp.tgz'],                            { cwd: '/tmp'})
 
     # Build PicoLisp 32-bit
