@@ -9,7 +9,7 @@ It can be used to run PicoLisp code such as [units tests](https://github.com/aw/
 
 ### `version`
 
-**Optional** The version of PicoLisp. Default `19.12`. Accepts `19.12`, `19.6`, `18.12`, `18.6`, `17.12`, `latest`
+**Optional** The version of PicoLisp. Default '20.6'. Accepts `19.12`, `19.6`, `18.12`, `18.6`, `17.12`, `latest`
 
 ### `architecture`
 
@@ -51,7 +51,13 @@ To build this action:
 * Install the dev dependencies with `npm install`
 * Generate the `dist/index.js` with `npm run build`
 
-# License
+## ChangeLog
+
+* [July 27, 2020]
+  - Force `curl` to use `http1.1` when fetching the PicoLisp source code.
+  - Update default PicoLisp version to 20.6
+
+## License
 
 [MIT License](LICENSE)
 
