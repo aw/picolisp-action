@@ -687,6 +687,10 @@ init = async function() {
       await exec.exec('mv', ['pil21', 'picoLisp'], {
         cwd: '/tmp'
       });
+      // Build PicoLisp
+      await exec.exec('make', null, {
+        cwd: '/tmp/picoLisp/src'
+      });
     } else {
       // Install dependencies
       await exec.exec('sudo', ['apt-get', 'install', 'libc6-dev-i386', 'libc6-i386', 'linux-libc-dev', 'gcc-multilib']);
@@ -697,16 +701,16 @@ init = async function() {
       await exec.exec('tar', ['-xf', 'picolisp.tgz'], {
         cwd: '/tmp'
       });
-    }
-    // Build PicoLisp
-    await exec.exec('make', null, {
-      cwd: '/tmp/picoLisp/src'
-    });
-    if (pilArchitecture === 'src64') {
-      // Build PicoLisp 64-bit
+      // Build PicoLisp
       await exec.exec('make', null, {
-        cwd: '/tmp/picoLisp/src64'
+        cwd: '/tmp/picoLisp/src'
       });
+      if (pilArchitecture === 'src64') {
+        // Build PicoLisp 64-bit
+        await exec.exec('make', null, {
+          cwd: '/tmp/picoLisp/src64'
+        });
+      }
     }
     // Install PicoLisp globally
     await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp', '/usr/lib/picolisp']);

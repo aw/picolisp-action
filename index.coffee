@@ -36,6 +36,9 @@ init = () ->
       await exec.exec('curl', ['--http1.1', '-o', 'pil21.tgz', "#{pilPath}/pil21.tgz"], { cwd: '/tmp'})
       await exec.exec('tar',  ['-xf', 'pil21.tgz'],                             { cwd: '/tmp'})
       await exec.exec('mv',   ['pil21', 'picoLisp'],                            { cwd: '/tmp'})
+
+      # Build PicoLisp
+      await exec.exec('make', null, { cwd: '/tmp/picoLisp/src'})
     else
       # Install dependencies
       await exec.exec('sudo', ['apt-get', 'install', 'libc6-dev-i386', 'libc6-i386', 'linux-libc-dev', 'gcc-multilib'])
@@ -44,11 +47,11 @@ init = () ->
       await exec.exec('curl', ['--http1.1', '-o', 'picolisp.tgz', "#{pilPath}/#{pilTarball}"], { cwd: '/tmp'})
       await exec.exec('tar',  ['-xf', 'picolisp.tgz'],                            { cwd: '/tmp'})
 
-    # Build PicoLisp
-    await exec.exec('make', null, { cwd: '/tmp/picoLisp/src'})
+      # Build PicoLisp
+      await exec.exec('make', null, { cwd: '/tmp/picoLisp/src'})
 
-    # Build PicoLisp 64-bit
-    await exec.exec('make', null, { cwd: '/tmp/picoLisp/src64'}) if pilArchitecture is 'src64'
+      # Build PicoLisp 64-bit
+      await exec.exec('make', null, { cwd: '/tmp/picoLisp/src64'}) if pilArchitecture is 'src64'
 
     # Install PicoLisp globally
     await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp',                   '/usr/lib/picolisp'])
