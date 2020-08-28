@@ -42,8 +42,10 @@ init = () ->
       await exec.exec('make', null, { cwd: '/tmp/picoLisp/src'})
 
       # Create missing pil21 pil script
-      pilScript = '#!/usr/bin/picolisp /usr/lib/picolisp/lib.l\n(load "@lib/misc.l" "@lib/btree.l" "@lib/db.l" "@lib/pilog.l")'
-      fs.writeFile 'pil', pilScript, { flag: "w", mode: 0o755 }
+      pilScript = '#!/usr/bin/picolisp /usr/lib/picolisp/lib.l\n(load "@lib/misc.l" "@lib/btree.l" "@lib/db.l" "@lib/pilog.l")\n'
+      fs.writeFileSync 'pil', pilScript, { mode: 0o755 }, (err) ->
+        false
+
       await exec.exec('sudo', ['mv', 'pil', '/usr/bin'])
     else
       # Install dependencies

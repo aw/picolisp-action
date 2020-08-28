@@ -694,10 +694,11 @@ init = async function() {
         cwd: '/tmp/picoLisp/src'
       });
       // Create missing pil21 pil script
-      pilScript = '#!/usr/bin/picolisp /usr/lib/picolisp/lib.l\n(load "@lib/misc.l" "@lib/btree.l" "@lib/db.l" "@lib/pilog.l")';
-      fs.writeFile('pil', pilScript, {
-        flag: "w",
+      pilScript = '#!/usr/bin/picolisp /usr/lib/picolisp/lib.l\n(load "@lib/misc.l" "@lib/btree.l" "@lib/db.l" "@lib/pilog.l")\n';
+      fs.writeFileSync('pil', pilScript, {
         mode: 0o755
+      }, function(err) {
+        return false;
       });
       await exec.exec('sudo', ['mv', 'pil', '/usr/bin']);
     } else {
