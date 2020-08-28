@@ -28,7 +28,7 @@ init = () ->
       await exec.exec('sudo',['apt-get', 'install', 'libreadline-dev', 'libffi-dev', 'libncurses-dev', 'llvm-8'])
 
       # Download and extract pil21
-      await exec.exec('curl', ['--http1.1', '-o', 'pil21.tgz', "#{pilPath}/#{pilTarball}"], { cwd: '/tmp'})
+      await exec.exec('curl', ['--http1.1', '-o', 'pil21.tgz', "#{pilPath}/pil21.tgz"], { cwd: '/tmp'})
       await exec.exec('tar',  ['-xf', 'pil21.tgz'],                            { cwd: '/tmp'})
 
       # Build pil21
