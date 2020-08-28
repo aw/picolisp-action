@@ -694,7 +694,7 @@ init = async function() {
         cwd: '/tmp/picoLisp/src'
       });
       // Create missing pil21 pil script
-      pilScript = '#!/usr/bin/picolisp /usr/lib/picolisp/lib.l\n(load "@lib/misc.l" "@lib/btree.l" "@lib/db.l" "@lib/pilog.l")\n';
+      pilScript = '#!/usr/bin/picolisp /usr/lib/picolisp/lib.l\n(load "@lib/misc.l" "@lib/pilog.l")\n';
       fs.writeFileSync('pil', pilScript, {
         mode: 0o755
       }, function(err) {
