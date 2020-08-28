@@ -9,7 +9,7 @@ It can be used to run PicoLisp code such as [units tests](https://github.com/aw/
 
 ### `version`
 
-**Optional** The version of PicoLisp. Default '20.6'. Accepts `19.12`, `19.6`, `18.12`, `18.6`, `17.12`, `latest`
+**Optional** The version of PicoLisp. Default '20.6'. Accepts `19.12`, `19.6`, `18.12`, `18.6`, `17.12`, `latest`, 'pil21'
 
 ### `architecture`
 
@@ -42,6 +42,7 @@ This action is written in CoffeeScript, see [index.coffee](index.coffee)
 * 32-bit PicoLisp is always compiled
 * 64-bit PicoLisp is bootstrapped from the 32-bit PicoLisp
 * 64-bit PicoLisp will not be compiled if the `architecture` value is `src`
+* `pil21` technically only works on 64-bit architectures
 
 ## Build
 
@@ -53,7 +54,9 @@ To build this action:
 
 ## ChangeLog
 
-* [July 27, 2020]
+* [August 28, 2020] `v2.2.0`
+  - Add support for building and testing with PicoLisp 21: `pil21`
+* [July 27, 2020] `v2.1.0`
   - Force `curl` to use `http1.1` when fetching the PicoLisp source code.
   - Update default PicoLisp version to 20.6
 
