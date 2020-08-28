@@ -25,7 +25,7 @@ init = () ->
 
     if pilVersion is 'pil21'
       # Install dependencies
-      await exec.exec('sudo',['apt-get', 'install', 'libreadline-dev', 'libffi-dev', 'libncurses-dev', 'llvm-8'])
+      await exec.exec('sudo',['apt-get', 'install', 'llvm'])
 
       # Download and extract pil21
       await exec.exec('curl', ['--http1.1', '-o', 'pil21.tgz', "#{pilPath}/pil21.tgz"], { cwd: '/tmp'})
