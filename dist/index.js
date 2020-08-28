@@ -673,6 +673,7 @@ init = async function() {
     if (pilVersion === 'pil21') {
       // Install dependencies
       await exec.exec('sudo', ['apt-get', 'install', 'llvm-9']);
+      // Create symlinks for llvm-9 binaries
       await exec.exec('sudo', ['ln', '-s', '/usr/bin/llvm-as-9', '/usr/bin/llvm-as']);
       await exec.exec('sudo', ['ln', '-s', '/usr/bin/llvm-link-9', '/usr/bin/llvm-link']);
       await exec.exec('sudo', ['ln', '-s', '/usr/bin/llc-9', '/usr/bin/llc']);
@@ -683,9 +684,8 @@ init = async function() {
       await exec.exec('tar', ['-xf', 'pil21.tgz'], {
         cwd: '/tmp'
       });
-      // Build pil21
-      await exec.exec('make', null, {
-        cwd: '/tmp/pil21/src'
+      await exec.exec('mv', ['pil21', 'picoLisp'], {
+        cwd: '/tmp'
       });
     } else {
       // Install dependencies
@@ -697,16 +697,16 @@ init = async function() {
       await exec.exec('tar', ['-xf', 'picolisp.tgz'], {
         cwd: '/tmp'
       });
-      // Build PicoLisp 32-bit
+    }
+    // Build PicoLisp
+    await exec.exec('make', null, {
+      cwd: '/tmp/picoLisp/src'
+    });
+    if (pilArchitecture === 'src64') {
+      // Build PicoLisp 64-bit
       await exec.exec('make', null, {
-        cwd: '/tmp/picoLisp/src'
+        cwd: '/tmp/picoLisp/src64'
       });
-      if (pilArchitecture === 'src64') {
-        // Build PicoLisp 64-bit
-        await exec.exec('make', null, {
-          cwd: '/tmp/picoLisp/src64'
-        });
-      }
     }
     // Install PicoLisp globally
     await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp', '/usr/lib/picolisp']);
