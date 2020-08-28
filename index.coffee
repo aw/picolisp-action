@@ -25,9 +25,10 @@ init = () ->
 
     if pilVersion is 'pil21'
       # Install dependencies
-      await exec.exec('sudo', ['ln', '-s', '/usr/bin/llvm-as-8', '/usr/bin/llvm-as'])
-      await exec.exec('sudo', ['ln', '-s', '/usr/bin/llvm-link-8', '/usr/bin/llvm-link'])
-      await exec.exec('sudo', ['ln', '-s', '/usr/bin/llc-8', '/usr/bin/llc'])
+      await exec.exec('sudo', ['apt-get', 'install', 'llvm-9'])
+      await exec.exec('sudo', ['ln', '-s', '/usr/bin/llvm-as-9', '/usr/bin/llvm-as'])
+      await exec.exec('sudo', ['ln', '-s', '/usr/bin/llvm-link-9', '/usr/bin/llvm-link'])
+      await exec.exec('sudo', ['ln', '-s', '/usr/bin/llc-9', '/usr/bin/llc'])
 
       # Download and extract pil21
       await exec.exec('curl', ['--http1.1', '-o', 'pil21.tgz', "#{pilPath}/pil21.tgz"], { cwd: '/tmp'})
