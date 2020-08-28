@@ -635,12 +635,14 @@ module.exports = require("os");
 /***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
 
   // Main required modules
-var allowedArch, allowedVersions, core, defaultArch, defaultVersion, exec, init, pilPath, releaseVersion,
+var allowedArch, allowedVersions, core, defaultArch, defaultVersion, exec, fs, init, pilPath, releaseVersion,
   indexOf = [].indexOf;
 
 core = __webpack_require__(470);
 
 exec = __webpack_require__(986);
+
+fs = __webpack_require__(747);
 
 releaseVersion = 'v2'; // stable release version (git tag)
 
@@ -655,7 +657,7 @@ allowedVersions = [defaultVersion, '19.12', '19.6', '18.12', '18.6', '17.12', 'l
 allowedArch = [defaultArch, 'src'];
 
 init = async function() {
-  var arch, error, pilArchitecture, pilTarball, pilVersion, ver;
+  var arch, error, pilArchitecture, pilScript, pilTarball, pilVersion, ver;
   try {
     // Set temporary variables (input)
     ver = (await core.getInput('version', {
@@ -691,6 +693,13 @@ init = async function() {
       await exec.exec('make', null, {
         cwd: '/tmp/picoLisp/src'
       });
+      // Create missing pil21 pil script
+      pilScript = '#!/usr/bin/picolisp /usr/lib/picolisp/lib.l\n(load "@lib/misc.l" "@lib/btree.l" "@lib/db.l" "@lib/pilog.l")';
+      fs.writeFile('pil', pilScript, {
+        flag: "w",
+        mode: 0o755
+      });
+      await exec.exec('sudo', ['mv', 'pil', '/usr/bin']);
     } else {
       // Install dependencies
       await exec.exec('sudo', ['apt-get', 'install', 'libc6-dev-i386', 'libc6-i386', 'linux-libc-dev', 'gcc-multilib']);
@@ -717,9 +726,6 @@ init = async function() {
     await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/picolisp', '/usr/bin']);
     await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/pil', '/usr/bin']);
     await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp', '/usr/share/picolisp']);
-    if (pilVersion === 'pil21') {
-      await exec.exec('sudo', ['ln', '-sf', '/usr/lib/picolisp/pil', '/usr/bin']);
-    }
     // Display the compiled version
     console.log("Built PicoLisp ver:");
     await exec.exec('pil', ['-version', '-bye']);
@@ -1027,6 +1033,13 @@ module.exports = require("events");
 /***/ (function(module) {
 
 module.exports = require("path");
+
+/***/ }),
+
+/***/ 747:
+/***/ (function(module) {
+
+module.exports = require("fs");
 
 /***/ }),
 

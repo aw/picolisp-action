@@ -1,6 +1,7 @@
 # Main required modules
 core      = require '@actions/core'
 exec      = require '@actions/exec'
+fs        = require 'fs'
 
 releaseVersion  = 'v2' # stable release version (git tag)
 pilPath         = 'https://software-lab.de'
@@ -39,6 +40,11 @@ init = () ->
 
       # Build PicoLisp
       await exec.exec('make', null, { cwd: '/tmp/picoLisp/src'})
+
+      # Create missing pil21 pil script
+      pilScript = '#!/usr/bin/picolisp /usr/lib/picolisp/lib.l\n(load "@lib/misc.l" "@lib/btree.l" "@lib/db.l" "@lib/pilog.l")'
+      fs.writeFile 'pil', pilScript, { flag: "w", mode: 0o755 }
+      await exec.exec('sudo', ['mv', 'pil', '/usr/bin'])
     else
       # Install dependencies
       await exec.exec('sudo', ['apt-get', 'install', 'libc6-dev-i386', 'libc6-i386', 'linux-libc-dev', 'gcc-multilib'])
@@ -58,8 +64,6 @@ init = () ->
     await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/picolisp',  '/usr/bin'])
     await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/pil',       '/usr/bin'])
     await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp',                   '/usr/share/picolisp'])
-
-    await exec.exec('sudo', ['ln', '-sf', '/usr/lib/picolisp/pil',          '/usr/bin']) if pilVersion is 'pil21'
 
     # Display the compiled version
     console.log "Built PicoLisp ver:"
