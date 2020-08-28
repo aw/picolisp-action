@@ -6,7 +6,7 @@ releaseVersion  = 'v2' # stable release version (git tag)
 pilPath         = 'https://software-lab.de'
 defaultVersion  = '20.6'
 defaultArch     = 'src64'
-allowedVersions = [defaultVersion, '19.12', '19.6', '18.12', '18.6', '17.12', 'latest']
+allowedVersions = [defaultVersion, '19.12', '19.6', '18.12', '18.6', '17.12', 'latest', 'pil21']
 allowedArch     = [defaultArch, 'src']
 
 init = () ->
@@ -20,19 +20,32 @@ init = () ->
     pilArchitecture = if arch in allowedArch     then arch            else defaultArch
     pilTarball      = if pilVersion is 'latest'  then 'picoLisp.tgz'  else "picoLisp-#{pilVersion}.tgz"
 
-    # Update Ubuntu and install dependencies
+    # Update Ubuntu
     await exec.exec('sudo', ['apt-get', 'update'])
-    await exec.exec('sudo', ['apt-get', 'install', 'libc6-dev-i386', 'libc6-i386', 'linux-libc-dev', 'gcc-multilib'])
 
-    # Download and extract PicoLisp
-    await exec.exec('curl', ['--http1.1', '-o', 'picolisp.tgz', "#{pilPath}/#{pilTarball}"], { cwd: '/tmp'})
-    await exec.exec('tar',  ['-xf', 'picolisp.tgz'],                            { cwd: '/tmp'})
+    if pilVersion is 'pil21'
+      # Install dependencies
+      await exec.exec('sudo',['apt-get', 'install', 'libreadline-dev', 'libffi-dev', 'libncurses-dev', 'llvm-8'])
 
-    # Build PicoLisp 32-bit
-    await exec.exec('make', null, { cwd: '/tmp/picoLisp/src'})
+      # Download and extract pil21
+      await exec.exec('curl', ['--http1.1', '-o', 'pil21.tgz', "#{pilPath}/#{pilTarball}"], { cwd: '/tmp'})
+      await exec.exec('tar',  ['-xf', 'pil21.tgz'],                            { cwd: '/tmp'})
 
-    # Build PicoLisp 64-bit
-    await exec.exec('make', null, { cwd: '/tmp/picoLisp/src64'}) if pilArchitecture is 'src64'
+      # Build pil21
+      await exec.exec('make', null, { cwd: '/tmp/pil21/src'})
+    else
+      # Install dependencies
+      await exec.exec('sudo', ['apt-get', 'install', 'libc6-dev-i386', 'libc6-i386', 'linux-libc-dev', 'gcc-multilib'])
+
+      # Download and extract PicoLisp
+      await exec.exec('curl', ['--http1.1', '-o', 'picolisp.tgz', "#{pilPath}/#{pilTarball}"], { cwd: '/tmp'})
+      await exec.exec('tar',  ['-xf', 'picolisp.tgz'],                            { cwd: '/tmp'})
+
+      # Build PicoLisp 32-bit
+      await exec.exec('make', null, { cwd: '/tmp/picoLisp/src'})
+
+      # Build PicoLisp 64-bit
+      await exec.exec('make', null, { cwd: '/tmp/picoLisp/src64'}) if pilArchitecture is 'src64'
 
     # Install PicoLisp globally
     await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp',                   '/usr/lib/picolisp'])
