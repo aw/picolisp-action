@@ -717,6 +717,9 @@ init = async function() {
     await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/picolisp', '/usr/bin']);
     await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/pil', '/usr/bin']);
     await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp', '/usr/share/picolisp']);
+    if (pilVersion === 'pil21') {
+      await exec.exec('sudo', ['ln', '-sf', '/usr/lib/picolisp/pil', '/usr/bin']);
+    }
     // Display the compiled version
     console.log("Built PicoLisp ver:");
     await exec.exec('pil', ['-version', '-bye']);
