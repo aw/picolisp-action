@@ -725,7 +725,9 @@ init = async function() {
     // Install PicoLisp globally
     await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp', '/usr/lib/picolisp']);
     await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/picolisp', '/usr/bin']);
-    await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/pil', '/usr/bin']);
+    if (pilVersion !== 'pil21') {
+      await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/pil', '/usr/bin']);
+    }
     await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp', '/usr/share/picolisp']);
     // Display the compiled version
     console.log("Built PicoLisp ver:");

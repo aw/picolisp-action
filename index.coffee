@@ -45,7 +45,6 @@ init = () ->
       pilScript = '#!/usr/bin/picolisp /usr/lib/picolisp/lib.l\n(load "@lib/misc.l" "@lib/btree.l" "@lib/db.l" "@lib/pilog.l")\n'
       fs.writeFileSync 'pil', pilScript, { mode: 0o755 }, (err) ->
         false
-
       await exec.exec('sudo', ['mv', 'pil', '/usr/bin'])
     else
       # Install dependencies
@@ -64,7 +63,7 @@ init = () ->
     # Install PicoLisp globally
     await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp',                   '/usr/lib/picolisp'])
     await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/picolisp',  '/usr/bin'])
-    await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/pil',       '/usr/bin'])
+    await exec.exec('sudo', ['ln', '-s', '/usr/lib/picolisp/bin/pil',       '/usr/bin']) if pilVersion isnt 'pil21'
     await exec.exec('sudo', ['ln', '-s', '/tmp/picoLisp',                   '/usr/share/picolisp'])
 
     # Display the compiled version
