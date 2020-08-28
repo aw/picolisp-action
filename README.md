@@ -9,7 +9,7 @@ It can be used to run PicoLisp code such as [units tests](https://github.com/aw/
 
 ### `version`
 
-**Optional** The version of PicoLisp. Default '20.6'. Accepts `19.12`, `19.6`, `18.12`, `18.6`, `17.12`, `latest`, 'pil21'
+**Optional** The version of PicoLisp. Default '20.6'. Accepts `19.12`, `19.6`, `18.12`, `18.6`, `17.12`, `latest`, `pil21`
 
 ### `architecture`
 
