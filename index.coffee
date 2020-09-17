@@ -32,6 +32,7 @@ init = () ->
       await exec.exec('sudo', ['ln', '-s', '/usr/bin/llvm-as-9', '/usr/bin/llvm-as'])
       await exec.exec('sudo', ['ln', '-s', '/usr/bin/llvm-link-9', '/usr/bin/llvm-link'])
       await exec.exec('sudo', ['ln', '-s', '/usr/bin/llc-9', '/usr/bin/llc'])
+      await exec.exec('sudo', ['ln', '-s', '/usr/bin/opt-9', '/usr/bin/opt'])
 
       # Download and extract pil21
       await exec.exec('curl', ['--http1.1', '-o', 'pil21.tgz', "#{pilPath}/pil21.tgz"], { cwd: '/tmp'})
