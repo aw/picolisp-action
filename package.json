@@ -1,6 +1,6 @@
 {
   "name": "picolisp-action",
-  "version": "2.2.0",
+  "version": "2.4.0",
   "description": "Run 32-bit or 64-bit PicoLisp code",
   "main": "dist/index.js",
   "scripts": {
@@ -18,8 +18,8 @@
   "author": "AW",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.0",
-    "@actions/exec": "^1.0.1"
+    "@actions/core": "^1.2.6",
+    "@actions/exec": "^1.0.4"
   },
   "devDependencies": {
     "@zeit/ncc": "^0.20.5",
