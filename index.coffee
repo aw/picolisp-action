@@ -3,9 +3,9 @@ core      = require '@actions/core'
 exec      = require '@actions/exec'
 fs        = require 'fs'
 
-releaseVersion  = 'v2' # stable release version (git tag)
+releaseVersion  = 'v3' # stable release version (git tag)
 pilPath         = 'https://software-lab.de'
-defaultVersion  = '20.6'
+defaultVersion  = 'pil21'
 defaultArch     = 'src64'
 allowedVersions = [defaultVersion, '19.12', '19.6', '18.12', '18.6', '17.12', 'latest', 'pil21']
 allowedArch     = [defaultArch, 'src']
@@ -26,13 +26,13 @@ init = () ->
 
     if pilVersion is 'pil21'
       # Install dependencies
-      await exec.exec('sudo', ['apt-get', 'install', 'llvm-9'])
+      await exec.exec('sudo', ['apt-get', 'install', 'llvm-14'])
 
-      # Create symlinks for llvm-9 binaries
-      await exec.exec('sudo', ['ln', '-s', '/usr/bin/llvm-as-9', '/usr/bin/llvm-as'])
-      await exec.exec('sudo', ['ln', '-s', '/usr/bin/llvm-link-9', '/usr/bin/llvm-link'])
-      await exec.exec('sudo', ['ln', '-s', '/usr/bin/llc-9', '/usr/bin/llc'])
-      await exec.exec('sudo', ['ln', '-s', '/usr/bin/opt-9', '/usr/bin/opt'])
+      # Create symlinks for llvm-14 binaries
+      await exec.exec('sudo', ['ln', '-s', '/usr/bin/llvm-as-14', '/usr/bin/llvm-as'])
+      await exec.exec('sudo', ['ln', '-s', '/usr/bin/llvm-link-14', '/usr/bin/llvm-link'])
+      await exec.exec('sudo', ['ln', '-s', '/usr/bin/llc-14', '/usr/bin/llc'])
+      await exec.exec('sudo', ['ln', '-s', '/usr/bin/opt-14', '/usr/bin/opt'])
 
       # Download and extract pil21
       await exec.exec('curl', ['--http1.1', '-o', 'pil21.tgz', "#{pilPath}/pil21.tgz"], { cwd: '/tmp'})

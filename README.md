@@ -9,7 +9,7 @@ It can be used to run PicoLisp code such as [units tests](https://github.com/aw/
 
 ### `version`
 
-**Optional** The version of PicoLisp. Default '20.6'. Accepts `19.12`, `19.6`, `18.12`, `18.6`, `17.12`, `latest`, `pil21`
+**Optional** The version of PicoLisp. Default `pil21`. Accepts `19.12`, `19.6`, `18.12`, `18.6`, `17.12`, `latest`, `pil21`
 
 ### `architecture`
 
@@ -54,6 +54,9 @@ To build this action:
 
 ## ChangeLog
 
+* [January 3, 2023] `v3.0.0`
+  - Default builds for `pil21`
+  - Builds with LLVM 14
 * [August 28, 2020] `v2.2.0`
   - Add support for building and testing with PicoLisp 21: `pil21`
 * [July 27, 2020] `v2.1.0`
@@ -64,4 +67,4 @@ To build this action:
 
 [MIT License](LICENSE)
 
-Copyright (c) 2019-2020 Alexander Williams, Unscramble <license@unscramble.jp>
+Copyright (c) 2019~ Alexander Williams, On-Prem <license@on-premises.com>

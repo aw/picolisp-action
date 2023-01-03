@@ -1,6 +1,6 @@
 name: 'PicoLisp Action'
 description: 'Run 32-bit or 64-bit PicoLisp code'
-author: 'AW <license@unscramble.jp>'
+author: 'AW <license@on-premises.com>'
 branding:
   icon: 'code'
   color: 'purple'
@@ -8,7 +8,7 @@ inputs:
   version:
     description: 'The version of PicoLisp'
     required: false
-    default: '20.6' # accepts '20.6', '19.12', '19.6', '18.12', '18.6', '17.12', 'latest', 'pil21'
+    default: 'pil21' # accepts '20.6', '19.12', '19.6', '18.12', '18.6', '17.12', 'latest', 'pil21'
   architecture:
     description: 'The architecture of PicoLisp (32 or 64-bit)'
     required: false
