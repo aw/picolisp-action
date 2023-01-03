@@ -1,28 +1,14 @@
-# GitHub Action to run 32-bit or 64-bit PicoLisp code
+# GitHub Action to run 64-bit pil21 PicoLisp code
 
 This action downloads, compiles, and globally installs PicoLisp.
 It can be used to run PicoLisp code such as [units tests](https://github.com/aw/picolisp-unit).
 
 ![Example PicoLisp tests](https://user-images.githubusercontent.com/153401/70022112-e4695580-158a-11ea-886d-0db01dbe7a66.png)
 
-## Inputs
-
-### `version`
-
-**Optional** The version of PicoLisp. Default `pil21`. Accepts `19.12`, `19.6`, `18.12`, `18.6`, `17.12`, `latest`, `pil21`
-
-### `architecture`
-
-**Optional** The architecture of PicoLisp (32 or 64-bit). Default `src64`. Accepts `src`, `src64`
-
 ## Example usage
 
 ```
-- uses: aw/picolisp-action@v2
-  with:
-    version: 18.12
-    architecture: src64
-
+- uses: aw/picolisp-action@v3
 - name: Print Hello World with the full PicoLisp version number
   run: pil -'prin "Hello World: "' -version -bye
 ```
@@ -37,12 +23,10 @@ This action is written in CoffeeScript, see [index.coffee](index.coffee)
 
 ## Notes
 
-* Unknown values will be replaced with the default value (ex: version: 1.2.3, will become version: 19.12)
+* Unknown values will be replaced with the default value (ex: version: 1.2.3, will become version: pil21)
 * The PicoLisp environment is extracted to `/tmp/picoLisp`
-* 32-bit PicoLisp is always compiled
-* 64-bit PicoLisp is bootstrapped from the 32-bit PicoLisp
-* 64-bit PicoLisp will not be compiled if the `architecture` value is `src`
-* `pil21` technically only works on 64-bit architectures
+* 32-bit PicoLisp is _not_ compiled anymore
+* 64-bit PicoLisp which is _not_ `pil21` is _not_ compiled anymore
 
 ## Build
 
@@ -57,6 +41,7 @@ To build this action:
 * [January 3, 2023] `v3.0.0`
   - Default builds for `pil21`
   - Builds with LLVM 14
+  - Removed support for 32-bit PicoLisp and 64-bit PicoLisp (except for 64-bit pil21)
 * [August 28, 2020] `v2.2.0`
   - Add support for building and testing with PicoLisp 21: `pil21`
 * [July 27, 2020] `v2.1.0`

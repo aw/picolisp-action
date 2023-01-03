@@ -1,5 +1,5 @@
 name: 'PicoLisp Action'
-description: 'Run 32-bit or 64-bit PicoLisp code'
+description: 'Run 64-bit pil21 PicoLisp code'
 author: 'AW <license@on-premises.com>'
 branding:
   icon: 'code'
@@ -8,11 +8,11 @@ inputs:
   version:
     description: 'The version of PicoLisp'
     required: false
-    default: 'pil21' # accepts '20.6', '19.12', '19.6', '18.12', '18.6', '17.12', 'latest', 'pil21'
+    default: 'pil21'
   architecture:
-    description: 'The architecture of PicoLisp (32 or 64-bit)'
+    description: 'The architecture of PicoLisp (64-bit)'
     required: false
-    default: 'src64' # accepts 'src' or 'src64'
+    default: 'src64'
 runs:
   using: 'node12'
   main: 'dist/index.js'

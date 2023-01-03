@@ -1,7 +1,7 @@
 {
   "name": "picolisp-action",
   "version": "3.0.0",
-  "description": "Run 32-bit or 64-bit PicoLisp code",
+  "description": "Run 64-bit pil21 PicoLisp code",
   "main": "dist/index.js",
   "scripts": {
     "build": "coffee -c -b --no-header index.coffee && ncc build index.js && rm index.js",
