@@ -1247,6 +1247,7 @@ init = async function() {
     await exec.exec('sudo', ['ln', '-s', '/usr/bin/llvm-link-14', '/usr/bin/llvm-link']);
     await exec.exec('sudo', ['ln', '-s', '/usr/bin/llc-14', '/usr/bin/llc']);
     await exec.exec('sudo', ['ln', '-s', '/usr/bin/opt-14', '/usr/bin/opt']);
+    await exec.exec('sudo', ['ln', '-s', '/usr/bin/llvm-config-14', '/usr/bin/llvm-config']);
     // Download and extract pil21
     await exec.exec('curl', ['--http1.1', '-o', 'pil21.tgz', `${pilPath}/pil21.tgz`], {
       cwd: '/tmp'
